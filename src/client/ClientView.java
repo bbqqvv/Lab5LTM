@@ -6,10 +6,11 @@ import java.awt.event.ActionListener;
 
 public class ClientView extends JFrame {
     private JTextField usernameField;
+    private JTextField receiverField;
     private JTextField serverIpField;
     private JTextArea emailContentArea;
     private JButton sendEmailButton;
-    private JButton connectButton;
+    private JButton registerButton;
     private JButton loginButton;
     private JTextArea messageArea;
     private JPanel panel;
@@ -23,7 +24,7 @@ public class ClientView extends JFrame {
         panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
-        JPanel topPanel = new JPanel(new GridLayout(3, 2));
+        JPanel topPanel = new JPanel(new GridLayout(4, 2));
         topPanel.add(new JLabel("Server IP:"));
         serverIpField = new JTextField("127.0.0.1");
         topPanel.add(serverIpField);
@@ -35,16 +36,21 @@ public class ClientView extends JFrame {
         loginButton = new JButton("Login");
         topPanel.add(loginButton);
 
+        registerButton = new JButton("Register");
+        topPanel.add(registerButton);
+
+        topPanel.add(new JLabel("Receiver:"));
+        receiverField = new JTextField(20);
+        topPanel.add(receiverField);
+
         panel.add(topPanel, BorderLayout.NORTH);
 
         emailContentArea = new JTextArea(5, 30);
         panel.add(new JScrollPane(emailContentArea), BorderLayout.CENTER);
 
         sendEmailButton = new JButton("Send Email");
-        connectButton = new JButton("Connect");
 
         JPanel bottomPanel = new JPanel(new FlowLayout());
-        bottomPanel.add(connectButton);
         bottomPanel.add(sendEmailButton);
         panel.add(bottomPanel, BorderLayout.SOUTH);
 
@@ -63,6 +69,10 @@ public class ClientView extends JFrame {
 
     public String getUsername() {
         return usernameField.getText();
+    }
+
+    public String getReceiver() {
+        return receiverField.getText();
     }
 
     public String getServerIp() {
@@ -85,8 +95,8 @@ public class ClientView extends JFrame {
         sendEmailButton.addActionListener(listener);
     }
 
-    public void addConnectListener(ActionListener listener) {
-        connectButton.addActionListener(listener);
+    public void addRegisterListener(ActionListener listener) {
+        registerButton.addActionListener(listener);
     }
 
     public void addLoginListener(ActionListener listener) {

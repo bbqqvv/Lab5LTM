@@ -11,11 +11,11 @@ public class Client {
 
     public Client(String serverAddress, int serverPort) throws Exception {
         socket = new DatagramSocket();
-        address = InetAddress.getByName(serverAddress); // Địa chỉ IP động của server
+        address = InetAddress.getByName(serverAddress); // Địa chỉ IP của server
         port = serverPort;
     }
 
-    // Gửi yêu cầu đến server
+    // Gửi yêu cầu tới server và nhận phản hồi
     public String sendRequest(String request) throws Exception {
         byte[] buf = request.getBytes();
         DatagramPacket packet = new DatagramPacket(buf, buf.length, address, port);
