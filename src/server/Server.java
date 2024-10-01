@@ -27,6 +27,7 @@ public class Server {
         }
     }
 
+    // Xử lý yêu cầu từ client
     private static String processRequest(String request) {
         String[] parts = request.split(":");
         String command = parts[0];
@@ -53,6 +54,23 @@ public class Server {
                 e.printStackTrace();
                 return "Failed to send email!";
             }
+        } else if (command.equals("LOGIN")) {
+            String username = parts[1];
+            File userDir = new File("accounts/" + username);
+            
+            // Nếu tài khoản không tồn tại
+            if (!userDir.exists()) {
+                return "Account does not exist.";
+            }
+
+            // Lấy danh sách các file trong thư mục của tài khoản
+            String[] files = userDir.list();
+            if (files == null || files.length == 0) {
+                return "No files in account.";
+            }
+
+            // Trả về danh sách file, ngăn cách bởi dấu phẩy
+            return String.join(",", files);
         }
 
         return "Unknown command!";

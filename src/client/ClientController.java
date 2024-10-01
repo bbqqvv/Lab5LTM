@@ -10,6 +10,7 @@ public class ClientController {
     public ClientController(ClientView view) {
         this.view = view;
 
+        // Sự kiện kết nối
         view.addConnectListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -24,6 +25,31 @@ public class ClientController {
             }
         });
 
+        // Sự kiện đăng nhập và nhận danh sách file từ server
+        view.addLoginListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    if (client == null) {
+                        view.setMessage("Please connect to the server first.");
+                        return;
+                    }
+
+                    String username = view.getUsername();
+                    String response = client.sendRequest("LOGIN:" + username);
+                    
+                    // Hiển thị danh sách file nhận được
+                    String[] files = response.split(",");
+                    view.updateFileList(files);
+                    view.setMessage("Login successful. Files received.");
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    view.setMessage("Login failed!");
+                }
+            }
+        });
+
+        // Sự kiện gửi email
         view.addSendEmailListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

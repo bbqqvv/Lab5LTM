@@ -15,6 +15,7 @@ public class Client {
         port = serverPort;
     }
 
+    // Gửi yêu cầu đến server
     public String sendRequest(String request) throws Exception {
         byte[] buf = request.getBytes();
         DatagramPacket packet = new DatagramPacket(buf, buf.length, address, port);
@@ -27,6 +28,7 @@ public class Client {
         return new String(receivePacket.getData(), 0, receivePacket.getLength());
     }
 
+    // Đóng socket khi không còn sử dụng
     public void close() {
         socket.close();
     }

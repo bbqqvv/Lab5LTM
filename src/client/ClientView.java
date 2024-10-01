@@ -10,18 +10,20 @@ public class ClientView extends JFrame {
     private JTextArea emailContentArea;
     private JButton sendEmailButton;
     private JButton connectButton;
+    private JButton loginButton;
     private JTextArea messageArea;
     private JPanel panel;
+    private JList<String> fileList;
 
     public ClientView() {
         setTitle("Mail Client");
-        setSize(500, 400);
+        setSize(600, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
-        JPanel topPanel = new JPanel(new GridLayout(2, 2));
+        JPanel topPanel = new JPanel(new GridLayout(3, 2));
         topPanel.add(new JLabel("Server IP:"));
         serverIpField = new JTextField("127.0.0.1");
         topPanel.add(serverIpField);
@@ -29,6 +31,10 @@ public class ClientView extends JFrame {
         topPanel.add(new JLabel("Username:"));
         usernameField = new JTextField(20);
         topPanel.add(usernameField);
+        
+        loginButton = new JButton("Login");
+        topPanel.add(loginButton);
+
         panel.add(topPanel, BorderLayout.NORTH);
 
         emailContentArea = new JTextArea(5, 30);
@@ -36,7 +42,7 @@ public class ClientView extends JFrame {
 
         sendEmailButton = new JButton("Send Email");
         connectButton = new JButton("Connect");
-        
+
         JPanel bottomPanel = new JPanel(new FlowLayout());
         bottomPanel.add(connectButton);
         bottomPanel.add(sendEmailButton);
@@ -45,6 +51,11 @@ public class ClientView extends JFrame {
         messageArea = new JTextArea(10, 40);
         messageArea.setEditable(false);
         panel.add(new JScrollPane(messageArea), BorderLayout.EAST);
+
+        fileList = new JList<>();
+        JScrollPane fileListScrollPane = new JScrollPane(fileList);
+        fileListScrollPane.setPreferredSize(new Dimension(200, 100));
+        panel.add(fileListScrollPane, BorderLayout.WEST);
 
         add(panel);
         setVisible(true);
@@ -66,11 +77,19 @@ public class ClientView extends JFrame {
         messageArea.setText(message);
     }
 
+    public void updateFileList(String[] files) {
+        fileList.setListData(files);
+    }
+
     public void addSendEmailListener(ActionListener listener) {
         sendEmailButton.addActionListener(listener);
     }
 
     public void addConnectListener(ActionListener listener) {
         connectButton.addActionListener(listener);
+    }
+
+    public void addLoginListener(ActionListener listener) {
+        loginButton.addActionListener(listener);
     }
 }
